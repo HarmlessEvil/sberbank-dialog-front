@@ -1,0 +1,17 @@
+$dark_green: rgb(0, 112, 60);
+$green: rgb(67, 150, 57);
+$light_green: rgb(125, 194, 68);
+$soft_green: rgb(179, 216, 140);
+$yellow_green: rgb(214, 224, 62);
+
+@mixin gradient-1($direction: to right) {
+  background-image: linear-gradient($direction, $dark_green, $light_green);
+}
+
+@mixin gradient-2($direction: to right) {
+  background-image: linear-gradient($direction, $light_green, $soft_green);
+}
+
+@mixin gradient-3($direction: to right) {
+  background-image: linear-gradient($direction, $light_green, $yellow_green);
+}

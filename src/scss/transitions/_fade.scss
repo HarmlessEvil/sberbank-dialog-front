@@ -1,0 +1,27 @@
+.fade-enter {
+  max-height: 0;
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: all 1s ease;
+}
+
+.fade-enter-to {
+  max-height: 1000px;
+  opacity: 1;
+}
+
+.fade-leave {
+  opacity: 1;
+  max-height: 1000px;
+}
+
+.fade-leave-active {
+  transition: all 1s ease;
+}
+
+.fade-leave-to {
+  opacity: 0;
+  max-height: 0;
+}

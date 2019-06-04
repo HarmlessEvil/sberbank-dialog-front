@@ -1,0 +1,15 @@
+html {
+  font-size: 62.5%;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Fedra Sans Pro', sans-serif;
+  @include gradient-1(-45deg);
+
+  &::before {
+    content: '';
+    box-shadow: 0 0 250px 250px white;
+  }
+}
