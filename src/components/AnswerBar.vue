@@ -1,10 +1,15 @@
 <template>
     <div class="answer-bar">
         <b-container class="answer-bar-container">
+            <b-row v-if="question" class="answer-bar-question-row">
+                <b-col>
+                    <h2>{{ question }}</h2>
+                </b-col>
+            </b-row>
             <b-row class="answer-bar-row" v-for="(row, i) in chunkedAnswers" :key="`${i}`">
-                <b-col class="answer-bar-answer" v-for="item in row" :key="item">
-                    <b-button squared variant="outline-dark" size="lg" class="answer-bar-action">
-                        {{ item }}
+                <b-col class="answer-bar-answer" v-for="item in row" :key="item.id">
+                    <b-button squared variant="outline-dark" size="lg" class="answer-bar-action" @click="sendReply(item)">
+                        {{ item.text }}
                     </b-button>
                 </b-col>
             </b-row>
@@ -19,6 +24,9 @@
             answers: {
                 type: Array,
                 required: true
+            },
+            question: {
+                type: String
             }
         },
         computed: {
@@ -34,6 +42,11 @@
 
                     return reduced;
                 }, []);
+            }
+        },
+        methods: {
+            sendReply(reply) {
+                this.$socket.emit('reply', reply);
             }
         }
     }
