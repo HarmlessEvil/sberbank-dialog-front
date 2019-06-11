@@ -1,23 +1,7 @@
-<template>
-    <div class="answer-bar">
-        <b-container class="answer-bar-container">
-            <b-row v-if="question" class="answer-bar-question-row">
-                <b-col>
-                    <h2>{{ question }}</h2>
-                </b-col>
-            </b-row>
-            <b-row class="answer-bar-row" v-for="(row, i) in chunkedAnswers" :key="`${i}`">
-                <b-col class="answer-bar-answer" v-for="item in row" :key="item.id">
-                    <b-button squared variant="outline-dark" size="lg" class="answer-bar-action" @click="sendReply(item)">
-                        {{ item.text }}
-                    </b-button>
-                </b-col>
-            </b-row>
-        </b-container>
-    </div>
-</template>
+<script type="text/jsx">
+    import {mapGetters} from "vuex";
 
-<script>
+
     export default {
         name: "AnswerBar",
         props: {
@@ -26,10 +10,84 @@
                 required: true
             },
             question: {
-                type: String
+                type: Object
             }
         },
+        data() {
+            return {
+                waiting: false
+            };
+        },
+        render() {
+            const question = this.question ?
+                <b-row class="answer-bar-question-row">
+                    <b-col>
+                        <h2>{this.questionText}</h2>
+                    </b-col>
+                </b-row> : null;
+
+            const inputRows = this.question.payload_fields ?
+                this.question.payload_fields.map(field => {
+                        return <b-row className="answer-bar-row" key={field.id}>
+                            <b-col>
+                                <b-form-group
+                                    className="answer-bar-input"
+                                    label={field.text}
+                                    label-cols="3"
+                                    label-for={field.id}
+                                >
+                                    <b-form-input id={field.id} required style="font-size: 2rem;"/>
+                                </b-form-group>
+                            </b-col>
+                        </b-row>
+                    }
+                ) : null;
+
+            const answerRows = this.answers.length === 1 && inputRows ?
+                null :
+                this.chunkedAnswers.map((row, i) =>
+                    <b-row class="answer-bar-row" key={`${i}`}>
+                        {
+                            row.map(item =>
+                                <b-col class="answer-bar-answer" key={item.id}>
+                                    <b-button
+                                        squared=""
+                                        variant="outline-dark"
+                                        size="lg"
+                                        class="answer-bar-action"
+                                        onClick={this.sendReply.bind(this, item)}
+                                        disabled={this.waiting}
+                                    >
+                                        {item.text}
+                                    </b-button>
+                                </b-col>)
+                        }
+                    </b-row>
+                );
+
+            return (
+                <div class="answer-bar">
+                    <div class="answer-bar-content">
+                        <div class="answer-bar-toolbar">
+                            {this.role === 'cashier' &&
+                            <b-button variant="outline-light" onClick={this.restart}>🔁</b-button>}
+                        </div>
+                        <b-container class="answer-bar-container">
+                            {question}
+                            <b-form onSubmit={this.submitForm}>
+                                {inputRows}
+                                {inputRows ? <b-button type="submit" variant="primary" block
+                                                       class="answer-bar-form-submit">Отправить</b-button> : ''}
+                            </b-form>
+                            {answerRows}
+                            {this.waiting && <b-form-text>Ожидаем ответа...</b-form-text>}
+                        </b-container>
+                    </div>
+                </div>
+            )
+        },
         computed: {
+            ...mapGetters(['role']),
             chunkedAnswers() {
                 const chunkSize = 2;
                 return this.answers.reduce((reduced, item, i) => {
@@ -42,11 +100,45 @@
 
                     return reduced;
                 }, []);
+            },
+            form() {
+                return this.question.payload_fields.map(field => field.id)
+            },
+            opponent() {
+                return {
+                    cashier: 'Клиент',
+                    client: 'Кассир'
+                }[this.role];
+            },
+            questionText() {
+                if (!this.question.text) {
+                    return '';
+                }
+
+                return `${this.opponent}: «${this.question.text}»`;
             }
         },
         methods: {
+            restart() {
+                this.$socket.emit('restart');
+                this.$emit('restart');
+            },
             sendReply(reply) {
+                this.waiting = true;
                 this.$socket.emit('reply', reply);
+            },
+            submitForm(event) {
+                event.preventDefault();
+
+                const reply = this.answers[0];
+                reply.payload = this.form.map(id => ({id, value: document.getElementById(id).value}));
+
+                this.sendReply(reply);
+            }
+        },
+        watch: {
+            questionText() {
+                this.waiting = false;
             }
         }
     }

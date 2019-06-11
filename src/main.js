@@ -7,7 +7,7 @@ import VueSocketIO from 'vue-socket.io'
 
 Vue.use(BootstrapVue);
 Vue.use(new VueSocketIO({
-    connection: '',
+    connection: 'http://46.229.213.223:3000/',
     debug: process.env.environment !== 'production',
     vuex: {
         store,

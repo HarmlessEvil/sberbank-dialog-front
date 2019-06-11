@@ -6,11 +6,24 @@
   background-color: #ffffff;
   box-shadow: 0 0 0 5px $dark_green;
 
+  &-content {
+    position: relative;
+  }
+
+  &-toolbar {
+    position: absolute;
+  }
+
+  &-form-submit {
+    font-size: 2rem;
+  }
+
   &-container {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    font-size: 2rem;
   }
 
   &-question-row {
@@ -20,6 +33,7 @@
     h2 {
       font-size: 3rem;
       font-family: 'Fedra Serif A Pro', serif;
+      margin-bottom: 1rem;
     }
   }
 
@@ -33,8 +47,17 @@
     align-items: center;
   }
 
+  &-input {
+    align-items: center;
+
+    &,
+    &-field{
+      font-size: 2rem;
+    }
+  }
+
   &-action {
     width: 80%;
-    font-size: 4rem;
+    font-size: 3rem;
   }
 }
