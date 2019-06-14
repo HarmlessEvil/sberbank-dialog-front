@@ -36,7 +36,7 @@
                                     label-cols="3"
                                     label-for={field.id}
                                 >
-                                    <b-form-input id={field.id} required style="font-size: 2rem;"/>
+                                    <b-form-input id={field.id} required="" style="font-size: 2rem;"/>
                                 </b-form-group>
                             </b-col>
                         </b-row>
