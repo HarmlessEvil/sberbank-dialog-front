@@ -28,10 +28,10 @@
 
             const inputRows = this.question.payload_fields ?
                 this.question.payload_fields.map(field => {
-                        return <b-row className="answer-bar-row" key={field.id}>
+                        return <b-row class="answer-bar-row" key={field.id}>
                             <b-col>
                                 <b-form-group
-                                    className="answer-bar-input"
+                                    class="answer-bar-input"
                                     label={field.text}
                                     label-cols="3"
                                     label-for={field.id}
@@ -69,8 +69,13 @@
                 <div class="answer-bar">
                     <div class="answer-bar-content">
                         <div class="answer-bar-toolbar">
-                            {this.role === 'cashier' &&
-                            <b-button variant="outline-light" onClick={this.restart}>🔁</b-button>}
+                            {this.role === 'cashier' ?
+                                <b-button variant="outline-light" onClick={this.restart}>🔁</b-button> :
+                                <b-dropdown text="Язык" className="m-md-2">
+                                    <b-dropdown-item onClick={this.changeLanguage}>ru</b-dropdown-item>
+                                    <b-dropdown-item onClick={this.changeLanguage}>zh</b-dropdown-item>
+                                </b-dropdown>
+                            }
                         </div>
                         <b-container class="answer-bar-container">
                             {question}
@@ -134,6 +139,9 @@
                 reply.payload = this.form.map(id => ({id, value: document.getElementById(id).value}));
 
                 this.sendReply(reply);
+            },
+            changeLanguage(event) {
+                this.$socket.emit('language_change', event.target.text);
             }
         },
         watch: {
