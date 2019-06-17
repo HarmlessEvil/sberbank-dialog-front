@@ -1,21 +1,28 @@
 <template>
     <div id="app">
         <img class="sberbank_logo" src="@/assets/sberbank_logo.svg" alt="Sberbank logo">
-        <answer-bar v-if="isLoggedIn" :answers="answers" :question="question" @restart="restart"/>
-        <log-in-selector v-else/>
+        <div class="app-w">
+            <h2>Войти как</h2>
+            <answer-bar v-if="isLoggedIn" :answers="answers" :question="question" @restart="restart"/>
+            <template v-else>
+                <login-as-button header="Кассир" text="Войдите в приложение как кассир, если данное устройство будет установлено на стороне кассира" />
+            </template>
+        </div>
     </div>
 </template>
 
 <script>
     import {mapGetters} from 'vuex'
     import AnswerBar from '@/components/AnswerBar'
-    import LogInSelector from '@/components/LogInSelector'
+    import LoginAsButton from '@/components/LoginAsButton'
+    // import LogInSelector from '@/components/LogInSelector'
 
     export default {
         name: 'app',
         components: {
             AnswerBar,
-            LogInSelector
+            LoginAsButton
+            // LogInSelector
         },
         data() {
             return {
@@ -34,6 +41,9 @@
                     this.question.payload_fields = data.payload_fields;
                 }
                 this.answers = data.replies;
+            },
+            end_conversation(data) {
+                console.log('The conversation has ended!');
             }
         },
         methods: {
