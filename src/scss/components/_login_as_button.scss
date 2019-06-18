@@ -1,18 +1,33 @@
 .login-as {
   &-card {
     text-align: center;
-    border: 2px solid $dark_green;
+    border: 2px solid $green;
     border-radius: 20px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+
+    &:hover,
+    &:active,
+    &:focus {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    }
   }
 
   &-header {
     font-size: 2.5rem;
     color: #ffffff;
-    background-color: $dark_green;
-    border-radius: 20px 20px 0 0;
+    background-color: $green;
+    border-radius: 17px 17px 0 0;
+    text-transform: uppercase;
   }
 
   &-content {
-    padding: 1rem;
+    padding: 0.5rem;
+    font-size: 1.8rem;
+    font-weight: lighter;
+    margin-bottom: 0;
+    background-color: #ffffff;
+    border-radius: 0 0 17px 17px;
   }
 }

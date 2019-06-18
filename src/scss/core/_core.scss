@@ -6,6 +6,7 @@ body {
   width: 100vw;
   height: 100vh;
   font-family: 'Fedra Sans Pro', sans-serif;
+  background-color: #e7e7e7;
 
   &::before {
     box-shadow: 0 0 250px 250px white;
@@ -27,11 +28,13 @@ body {
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 h2 {
   font-size: 3rem;
   font-family: 'Fedra Serif A Pro', serif;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
   text-align: center;
 }

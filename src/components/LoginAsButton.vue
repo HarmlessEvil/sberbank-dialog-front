@@ -1,5 +1,8 @@
 <template>
-    <div class="login-as-card">
+    <div
+            class="login-as-card"
+            @click="$emit('click')"
+    >
         <header class="login-as-header">{{ header }}</header>
         <p class="login-as-content">{{ text }}</p>
     </div>
