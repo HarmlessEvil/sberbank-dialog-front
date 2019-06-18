@@ -186,6 +186,7 @@
                 this.selectAnswer = null;
                 this.headerTranslationString = '';
                 this.isConversationFinished = false;
+                this.$i18n.locale = 'ru';
 
                 this.$socket.emit('restart');
             },
