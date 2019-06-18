@@ -1,3 +1,9 @@
 {
-  "message": "hello i18n !!"
+  "cashier": "Кассир:",
+  "dialog_finished": "Диалог окончен. Спасибо!",
+  "login_as": "Войти как",
+  "please_wait_for_answer": "Пожалуйста, дождитесь ответа...",
+  "send": "Отправить",
+  "which_operation_select": "Какую операцию вы хотите совершить?",
+  "you_chose": "Вы выбрали:"
 }

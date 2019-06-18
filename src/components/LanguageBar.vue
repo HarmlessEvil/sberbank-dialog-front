@@ -29,6 +29,7 @@
         },
         methods: {
             changeLanguage(langCode) {
+                this.$i18n.locale = langCode;
                 this.$socket.emit('language_change', langCode);
             }
         }

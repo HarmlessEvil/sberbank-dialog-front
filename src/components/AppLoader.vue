@@ -1,5 +1,5 @@
 <template>
-    <p class="app-loader">Пожалуйста, дождитесь ответа...</p>
+    <p class="app-loader">{{ $t('please_wait_for_answer') }}</p>
 </template>
 
 <script>
