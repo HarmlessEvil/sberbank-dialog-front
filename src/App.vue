@@ -74,31 +74,27 @@
                 >
                 Начать диалог заново
             </answer-button>
-            <language-bar v-if="isClient"/>
+            <language-bar v-if="isClient && !waiting"/>
         </div>
     </div>
 </template>
 
 <script>
     import {mapGetters, mapMutations} from 'vuex'
-    // import AnswerBar from '@/components/AnswerBar'
     import AnswerButton from '@/components/AnswerButton'
     import AppInput from '@/components/AppInput'
     import AppLoader from '@/components/AppLoader'
     import LanguageBar from '@/components/LanguageBar'
     import LoginAsButton from '@/components/LoginAsButton'
-    // import LogInSelector from '@/components/LogInSelector'
 
     export default {
         name: 'app',
         components: {
-            // AnswerBar,
             AnswerButton,
             AppInput,
             AppLoader,
             LanguageBar,
             LoginAsButton
-            // LogInSelector
         },
         data() {
             return {
@@ -183,7 +179,7 @@
                     text: ''
                 };
                 this.waiting = false;
-                this.selectAnswer = null;
+                this.selectedAnswer = null;
                 this.headerTranslationString = '';
                 this.isConversationFinished = false;
 
